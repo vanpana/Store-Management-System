@@ -22,6 +22,26 @@ namespace MyStore
         private void LoadAlbums()
         {
             AlbumsView.DataSource = DatabaseUtil.GetAllAlbums().Tables[0];
+            AlbumsView.ClearSelection();
+        }
+
+        private void AlbumsView_SelectionChanged(object sender, EventArgs e)
+        {
+            if (AlbumsView.SelectedCells.Count > 0)
+            {
+                // Get index of the selected row
+                int selectedrowindex = AlbumsView.SelectedCells[0].RowIndex;
+
+                // Get selected row model
+                DataGridViewRow selectedRow = AlbumsView.Rows[selectedrowindex];
+
+                // Get index of the album
+                string albumID = Convert.ToString(selectedRow.Cells[0].Value);
+
+                // Load songs from the album
+                SongsView.DataSource = DatabaseUtil.GetSongsFromAlbum(Int32.Parse(albumID)).Tables[0];
+
+            }
         }
     }
 }

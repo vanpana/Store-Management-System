@@ -42,6 +42,7 @@
             this.AlbumsView.RowTemplate.Height = 31;
             this.AlbumsView.Size = new System.Drawing.Size(412, 405);
             this.AlbumsView.TabIndex = 0;
+            this.AlbumsView.SelectionChanged += new System.EventHandler(this.AlbumsView_SelectionChanged);
             // 
             // SongsView
             // 
@@ -52,14 +53,14 @@
             this.SongsView.Size = new System.Drawing.Size(412, 405);
             this.SongsView.TabIndex = 1;
             // 
-            // Form1
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1435, 928);
             this.Controls.Add(this.SongsView);
             this.Controls.Add(this.AlbumsView);
-            this.Name = "Form1";
+            this.Name = "MainWindow";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.AlbumsView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SongsView)).EndInit();

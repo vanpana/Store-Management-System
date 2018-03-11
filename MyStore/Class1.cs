@@ -36,7 +36,18 @@ namespace MyStore
             SqlDataAdapter adapter = new SqlDataAdapter();
             DataSet dataSet = new DataSet();
 
-            adapter.SelectCommand = new SqlCommand("SELECT * FROM dbo.Albums", Connection);
+            adapter.SelectCommand = new SqlCommand("SELECT * FROM Albums", Connection);
+            adapter.Fill(dataSet);
+
+            return dataSet;
+        }
+
+        public static DataSet GetSongsFromAlbum(int id)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            DataSet dataSet = new DataSet();
+            
+            adapter.SelectCommand = new SqlCommand("SELECT * FROM Songs WHERE albumID = " + id, Connection); ;
             adapter.Fill(dataSet);
 
             return dataSet;
