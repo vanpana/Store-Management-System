@@ -40,17 +40,17 @@
             this.AlbumsView.Location = new System.Drawing.Point(56, 179);
             this.AlbumsView.Name = "AlbumsView";
             this.AlbumsView.RowTemplate.Height = 31;
-            this.AlbumsView.Size = new System.Drawing.Size(412, 405);
+            this.AlbumsView.Size = new System.Drawing.Size(632, 405);
             this.AlbumsView.TabIndex = 0;
             this.AlbumsView.SelectionChanged += new System.EventHandler(this.AlbumsView_SelectionChanged);
             // 
             // SongsView
             // 
             this.SongsView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SongsView.Location = new System.Drawing.Point(972, 179);
+            this.SongsView.Location = new System.Drawing.Point(753, 179);
             this.SongsView.Name = "SongsView";
             this.SongsView.RowTemplate.Height = 31;
-            this.SongsView.Size = new System.Drawing.Size(412, 405);
+            this.SongsView.Size = new System.Drawing.Size(631, 405);
             this.SongsView.TabIndex = 1;
             // 
             // MainWindow

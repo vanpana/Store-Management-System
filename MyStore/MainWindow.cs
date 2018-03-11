@@ -38,8 +38,9 @@ namespace MyStore
                 // Get index of the album
                 string albumID = Convert.ToString(selectedRow.Cells[0].Value);
 
-                // Load songs from the album
-                SongsView.DataSource = DatabaseUtil.GetSongsFromAlbum(Int32.Parse(albumID)).Tables[0];
+                if (albumID != "")
+                    // Load songs from the album
+                    SongsView.DataSource = DatabaseUtil.GetSongsFromAlbum(Int32.Parse(albumID)).Tables[0];
 
             }
         }
