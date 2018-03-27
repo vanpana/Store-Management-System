@@ -52,5 +52,23 @@ namespace MyStore
 
             return dataSet;
         }
+
+        public static Boolean updateSong(int songID, string name, int albumID, int price, string genre)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.UpdateCommand = new SqlCommand("UPDATE Songs set name = @name, albumID = @album_id, price = @price, genre = @genre " +
+                "where songID = @song_id", Connection);
+
+            adapter.UpdateCommand.Parameters.AddWithValue("@name", name);
+            adapter.UpdateCommand.Parameters.AddWithValue("@album_id", albumID);
+            adapter.UpdateCommand.Parameters.AddWithValue("@price", price);
+            adapter.UpdateCommand.Parameters.AddWithValue("@genre", genre);
+            adapter.UpdateCommand.Parameters.AddWithValue("@song_id", songID);
+
+            int result = adapter.UpdateCommand.ExecuteNonQuery();
+
+            if (result >= 1) return true;
+            return false;
+        }
     }
 }
