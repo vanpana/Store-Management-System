@@ -70,5 +70,18 @@ namespace MyStore
             if (result >= 1) return true;
             return false;
         }
+
+        public static Boolean deleteSong(int songID)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.DeleteCommand = new SqlCommand("DELETE FROM Songs where songID = @song_id", Connection);
+
+            adapter.DeleteCommand.Parameters.AddWithValue("@song_id", songID);
+
+            int result = adapter.DeleteCommand.ExecuteNonQuery();
+
+            if (result >= 1) return true;
+            return false;
+        }
     }
 }

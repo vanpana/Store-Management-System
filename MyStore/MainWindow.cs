@@ -89,5 +89,14 @@ namespace MyStore
                 // If operation succeeded, load updated songs from the album
                 SongsView.DataSource = DatabaseUtil.GetSongsFromAlbum(albumID).Tables[0];
         }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            int songID = getSelectedSongID();
+            Boolean result = false;
+
+            if (songID > 0)
+                result = DatabaseUtil.deleteSong(songID);
+        }
     }
 }
