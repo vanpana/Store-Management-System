@@ -53,6 +53,24 @@ namespace MyStore
             return dataSet;
         }
 
+        public static Boolean addSong(int songID, string name, int albumID, int price, string genre)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.InsertCommand = new SqlCommand("INSERT INTO Songs (songID, name, albumID, price, genre) VALUES (" +
+                "@song_id, @name, @album_id, @price, @genre)", Connection);
+
+            adapter.InsertCommand.Parameters.AddWithValue("@name", name);
+            adapter.InsertCommand.Parameters.AddWithValue("@album_id", albumID);
+            adapter.InsertCommand.Parameters.AddWithValue("@price", price);
+            adapter.InsertCommand.Parameters.AddWithValue("@genre", genre);
+            adapter.InsertCommand.Parameters.AddWithValue("@song_id", songID);
+
+            int result = adapter.InsertCommand.ExecuteNonQuery();
+
+            if (result >= 1) return true;
+            return false;
+        }
+
         public static Boolean updateSong(int songID, string name, int albumID, int price, string genre)
         {
             SqlDataAdapter adapter = new SqlDataAdapter();
@@ -82,6 +100,14 @@ namespace MyStore
 
             if (result >= 1) return true;
             return false;
+        }
+
+        public static int getNextID()
+        {
+            string getId = ("SELECT top 1 songID from Songs order by songID desc");
+            SqlCommand cmd1 = new SqlCommand(getId, Connection);
+            int i = Convert.ToInt32(cmd1.ExecuteScalar());
+            return i + 1;
         }
     }
 }

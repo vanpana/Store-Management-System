@@ -97,6 +97,24 @@ namespace MyStore
 
             if (songID > 0)
                 result = DatabaseUtil.deleteSong(songID);
+
+            if (result)
+                // If operation succeeded, load updated songs from the album
+                SongsView.DataSource = DatabaseUtil.GetSongsFromAlbum(getSelectedAlbumID()).Tables[0];
+        }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            int albumID = getSelectedAlbumID();
+            int songID = getSelectedSongID();
+            Boolean result = false;
+
+            if (albumID > 0 && songID > 0)
+                result = DatabaseUtil.addSong(DatabaseUtil.getNextID(), songTitle.Text, albumID, Int32.Parse(songPrice.Text), songGenre.Text);
+
+            if (result)
+                // If operation succeeded, load updated songs from the album
+                SongsView.DataSource = DatabaseUtil.GetSongsFromAlbum(albumID).Tables[0];
         }
     }
 }
