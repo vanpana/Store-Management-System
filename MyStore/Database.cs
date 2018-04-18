@@ -66,7 +66,7 @@ namespace MyStore
             List<String> columnNamesList = getColNames();
 
             SqlDataAdapter adapter = new SqlDataAdapter();
-            SqlCommand cmd = new SqlCommand("INSERT INTO " + childTableName + "(" + childColumnNames + ")" + "VALUES(" + childParams + ")");
+            SqlCommand cmd = new SqlCommand("INSERT INTO " + childTableName + "(" + childColumnNames + ")" + "VALUES(" + childParams + ")", Connection);
       
             foreach(string column in columnNamesList)
             {

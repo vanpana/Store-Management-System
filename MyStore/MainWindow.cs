@@ -28,12 +28,16 @@ namespace MyStore
 
         private void setTextEdits(List<string> colNames)
         {
+            int i = 0;
             foreach (string column in colNames)
             {
-                Button button = new Button();
-                button.Name = column;
-                button.Size = new Size(200, 90);
-                Holder.Controls.Add(button);
+                TextBox textBox = new TextBox();
+                textBox.Name = column;
+                textBox.Text = column;
+                textBox.Size = new Size(200, 90);
+                textBox.Location = new Point(0, i);
+                i += 20;
+                Holder.Controls.Add(textBox);
             }
         }
 
