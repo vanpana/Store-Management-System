@@ -15,14 +15,26 @@ namespace MyStore
         public MainWindow()
         {
             InitializeComponent();
-
+       
             LoadAlbums();
+            setTextEdits(DatabaseUtil.getColNames());
         }
 
         private void LoadAlbums()
         {
-            AlbumsView.DataSource = DatabaseUtil.GetAllAlbums().Tables[0];
+            AlbumsView.DataSource = DatabaseUtil.GetParent().Tables[0];
             AlbumsView.ClearSelection();
+        }
+
+        private void setTextEdits(List<string> colNames)
+        {
+            foreach (string column in colNames)
+            {
+                Button button = new Button();
+                button.Name = column;
+                button.Size = new Size(200, 90);
+                Holder.Controls.Add(button);
+            }
         }
 
         private int getSelectedAlbumID()
@@ -73,11 +85,13 @@ namespace MyStore
 
             if (albumID > 0)
                 // Load songs from the album
-                SongsView.DataSource = DatabaseUtil.GetSongsFromAlbum(albumID).Tables[0];
+                SongsView.DataSource = DatabaseUtil.GetChildByParentID(albumID).Tables[0];
         }
 
+        
         private void updateButton_Click(object sender, EventArgs e)
         {
+            /*
             int albumID = getSelectedAlbumID();
             int songID = getSelectedSongID();
             Boolean result = false;
@@ -87,11 +101,13 @@ namespace MyStore
 
             if (result)
                 // If operation succeeded, load updated songs from the album
-                SongsView.DataSource = DatabaseUtil.GetSongsFromAlbum(albumID).Tables[0];
+                SongsView.DataSource = DatabaseUtil.GetChildByParentID(albumID).Tables[0];
+            */   
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
+            /*
             int songID = getSelectedSongID();
             Boolean result = false;
 
@@ -100,7 +116,7 @@ namespace MyStore
 
             if (result)
                 // If operation succeeded, load updated songs from the album
-                SongsView.DataSource = DatabaseUtil.GetSongsFromAlbum(getSelectedAlbumID()).Tables[0];
+                SongsView.DataSource = DatabaseUtil.GetSongsFromAlbum(getSelectedAlbumID()).Tables[0]; */
         }
 
         private void addButton_Click(object sender, EventArgs e)
@@ -110,11 +126,12 @@ namespace MyStore
             Boolean result = false;
 
             if (albumID > 0 && songID > 0)
-                result = DatabaseUtil.addSong(DatabaseUtil.getNextID(), songTitle.Text, albumID, Int32.Parse(songPrice.Text), songGenre.Text);
+                result = DatabaseUtil.addChild(Holder);
 
             if (result)
                 // If operation succeeded, load updated songs from the album
-                SongsView.DataSource = DatabaseUtil.GetSongsFromAlbum(albumID).Tables[0];
+                SongsView.DataSource = DatabaseUtil.GetChildByParentID(albumID).Tables[0];
         }
+        
     }
 }
