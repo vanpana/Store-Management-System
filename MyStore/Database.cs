@@ -103,13 +103,17 @@ namespace MyStore
             return false;
         }
 
-        public static Boolean deleteSong(int songID)
+        public static Boolean deleteSong(Panel panel)
         {
             SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.DeleteCommand = new SqlCommand("DELETE FROM Songs where songID = @song_id", Connection);
+            SqlCommand cmd = new SqlCommand(ConfigurationManager.AppSettings["deleteChild"], Connection);
 
-            adapter.DeleteCommand.Parameters.AddWithValue("@song_id", songID);
-
+            foreach (string column in getColNames())
+            {
+                TextBox textBox = (TextBox)panel.Controls[column];
+                cmd.Parameters.AddWithValue("@" + column, textBox.Text);
+            }
+            adapter.DeleteCommand = cmd;
             int result = adapter.DeleteCommand.ExecuteNonQuery();
 
             if (result >= 1) return true;

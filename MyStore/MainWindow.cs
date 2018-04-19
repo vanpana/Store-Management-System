@@ -108,16 +108,13 @@ namespace MyStore
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            /*
-            int songID = getSelectedSongID();
             Boolean result = false;
-
-            if (songID > 0)
-                result = DatabaseUtil.deleteSong(songID);
+            
+            result = DatabaseUtil.deleteSong(Holder);
 
             if (result)
                 // If operation succeeded, load updated songs from the album
-                SongsView.DataSource = DatabaseUtil.GetSongsFromAlbum(getSelectedAlbumID()).Tables[0]; */
+                SongsView.DataSource = DatabaseUtil.GetChildByParentID(getSelectedAlbumID()).Tables[0];
         }
 
         private void addButton_Click(object sender, EventArgs e)
