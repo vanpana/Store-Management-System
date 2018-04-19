@@ -95,18 +95,15 @@ namespace MyStore
         
         private void updateButton_Click(object sender, EventArgs e)
         {
-            /*
             int albumID = getSelectedAlbumID();
             int songID = getSelectedSongID();
             Boolean result = false;
-
-            if (albumID > 0 && songID > 0)
-                result = DatabaseUtil.updateSong(songID, songTitle.Text, albumID, Int32.Parse(songPrice.Text), songGenre.Text);
+            
+            result = DatabaseUtil.updateSong(Holder);
 
             if (result)
                 // If operation succeeded, load updated songs from the album
-                SongsView.DataSource = DatabaseUtil.GetChildByParentID(albumID).Tables[0];
-            */   
+                SongsView.DataSource = DatabaseUtil.GetChildByParentID(albumID).Tables[0]; 
         }
 
         private void deleteButton_Click(object sender, EventArgs e)

@@ -63,12 +63,11 @@ namespace MyStore
             string childTableName = ConfigurationManager.AppSettings["childTableName"];
             string childColumnNames = ConfigurationManager.AppSettings["childColNames"];
             string childParams = ConfigurationManager.AppSettings["childColParams"];
-            List<String> columnNamesList = getColNames();
 
             SqlDataAdapter adapter = new SqlDataAdapter();
             SqlCommand cmd = new SqlCommand("INSERT INTO " + childTableName + "(" + childColumnNames + ")" + "VALUES(" + childParams + ")", Connection);
       
-            foreach(string column in columnNamesList)
+            foreach(string column in getColNames())
             {
                 TextBox textBox = (TextBox)panel.Controls[column];
                 cmd.Parameters.AddWithValue("@" + column, textBox.Text);
@@ -86,18 +85,18 @@ namespace MyStore
             return new List<string>(ConfigurationManager.AppSettings["childColNames"].Split(','));
         }
 
-        public static Boolean updateSong(int songID, string name, int albumID, int price, string genre)
+        public static Boolean updateSong(Panel panel)
         {
             SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.UpdateCommand = new SqlCommand("UPDATE Songs set name = @name, albumID = @album_id, price = @price, genre = @genre " +
-                "where songID = @song_id", Connection);
+            SqlCommand cmd = new SqlCommand(ConfigurationManager.AppSettings["updateChild"], Connection);
 
-            adapter.UpdateCommand.Parameters.AddWithValue("@name", name);
-            adapter.UpdateCommand.Parameters.AddWithValue("@album_id", albumID);
-            adapter.UpdateCommand.Parameters.AddWithValue("@price", price);
-            adapter.UpdateCommand.Parameters.AddWithValue("@genre", genre);
-            adapter.UpdateCommand.Parameters.AddWithValue("@song_id", songID);
+            foreach (string column in getColNames())
+            {
+                TextBox textBox = (TextBox)panel.Controls[column];
+                cmd.Parameters.AddWithValue("@" + column, textBox.Text);
+            }
 
+            adapter.UpdateCommand = cmd;
             int result = adapter.UpdateCommand.ExecuteNonQuery();
 
             if (result >= 1) return true;
