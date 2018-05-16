@@ -119,16 +119,13 @@ namespace MyStore
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            int albumID = getSelectedAlbumID();
-            int songID = getSelectedSongID();
             Boolean result = false;
-
-            if (albumID > 0 && songID > 0)
-                result = DatabaseUtil.addChild(Holder);
+            
+            result = DatabaseUtil.addChild(Holder);
 
             if (result)
                 // If operation succeeded, load updated songs from the album
-                SongsView.DataSource = DatabaseUtil.GetChildByParentID(albumID).Tables[0];
+                SongsView.DataSource = DatabaseUtil.GetChildByParentID(getSelectedAlbumID()).Tables[0];
         }
         
     }
