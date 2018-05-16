@@ -34,6 +34,7 @@
             this.updateButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
             this.Holder = new System.Windows.Forms.Panel();
+            this.deadlock = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.AlbumsView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SongsView)).BeginInit();
             this.SuspendLayout();
@@ -94,11 +95,22 @@
             this.Holder.Size = new System.Drawing.Size(1323, 266);
             this.Holder.TabIndex = 11;
             // 
+            // deadlock
+            // 
+            this.deadlock.Location = new System.Drawing.Point(198, 789);
+            this.deadlock.Name = "deadlock";
+            this.deadlock.Size = new System.Drawing.Size(249, 36);
+            this.deadlock.TabIndex = 12;
+            this.deadlock.Text = "Make deadlock";
+            this.deadlock.UseVisualStyleBackColor = true;
+            this.deadlock.Click += new System.EventHandler(this.deadlock_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1435, 928);
+            this.Controls.Add(this.deadlock);
             this.Controls.Add(this.Holder);
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.updateButton);
@@ -121,6 +133,7 @@
         private System.Windows.Forms.Button updateButton;
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.Panel Holder;
+        private System.Windows.Forms.Button deadlock;
     }
 }
 

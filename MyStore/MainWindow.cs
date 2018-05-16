@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,10 +14,12 @@ namespace MyStore
 {
     public partial class MainWindow : Form
     {
+        int retry = 3;
+
         public MainWindow()
         {
             InitializeComponent();
-       
+
             LoadAlbums();
             setTextEdits(DatabaseUtil.getColNames());
         }
@@ -92,24 +96,24 @@ namespace MyStore
                 SongsView.DataSource = DatabaseUtil.GetChildByParentID(albumID).Tables[0];
         }
 
-        
+
         private void updateButton_Click(object sender, EventArgs e)
         {
             int albumID = getSelectedAlbumID();
             int songID = getSelectedSongID();
             Boolean result = false;
-            
+
             result = DatabaseUtil.updateSong(Holder);
 
             if (result)
                 // If operation succeeded, load updated songs from the album
-                SongsView.DataSource = DatabaseUtil.GetChildByParentID(albumID).Tables[0]; 
+                SongsView.DataSource = DatabaseUtil.GetChildByParentID(albumID).Tables[0];
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
             Boolean result = false;
-            
+
             result = DatabaseUtil.deleteSong(Holder);
 
             if (result)
@@ -120,13 +124,57 @@ namespace MyStore
         private void addButton_Click(object sender, EventArgs e)
         {
             Boolean result = false;
-            
+
             result = DatabaseUtil.addChild(Holder);
 
             if (result)
                 // If operation succeeded, load updated songs from the album
                 SongsView.DataSource = DatabaseUtil.GetChildByParentID(getSelectedAlbumID()).Tables[0];
         }
-        
+
+        private void deadlock_Click(object sender, EventArgs e)
+        {
+            retry = 3;
+            // Thread 1
+            new Thread(delegate ()
+            {
+                callProc("makedeadlock1");
+            }).Start();
+
+            // Thread 2
+            new Thread(delegate ()
+            {
+                callProc("makedeadlock2");
+            }).Start();
+        }
+
+        private void callProc(String procname)
+        {
+                using (var cmd = new SqlCommand(procname, DatabaseUtil.Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                })
+                {
+                    try
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (SqlException sqle)
+                    {
+                        if (sqle.Number == 1205)
+                        {
+                            if (retry > 0)
+                            {
+                                MessageBox.Show("retry--");
+                                retry--;
+                                callProc(procname);
+
+                            }
+                        }
+                    }
+
+                }
+        }
     }
 }
